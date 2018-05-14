@@ -77,3 +77,10 @@ tags specified in genius like `[Chorus]` and `[Verse]`.
 For example, here is a wordcloud output called `sad.png`, which is the result when you run `thoughtbubble "Radiohead"`.
 
 ![](sad.png)
+
+## Acknowledgements
+
+This project uses some really nice code written by other people to do something dirty.
+
+* [Click](https://github.com/pallets/click)
+* [word_cloud](https://github.com/amueller/word_cloud)
