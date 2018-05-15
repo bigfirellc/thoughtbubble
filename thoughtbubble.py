@@ -24,6 +24,7 @@ def make_word_cloud(text, artist, filename):
     stopwords.add("Bridge")
     stopwords.add("Guitar Solo")
     stopwords.add("Outro")
+    stopwords.add("Intro")
 
     wc = WordCloud(background_color="white",
                    max_words=500,
