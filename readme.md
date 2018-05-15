@@ -27,21 +27,24 @@ For macOS, install [Homebrew](https://brew.sh), then install python
 brew install python3
 ```
 
+For Ubuntu Linux, install python3 and virtualenv
+
+```bash
+sudo apt install python3 virtualenv
+```
+
 Create a virtualenv in somewhere nice, like your home directory
 
 ```bash
-
 cd ~/thoughtbubble*
 
 # Python 3
-python3 -m venv venv/
+virtualenv venv/ -p python3
 . venv/bin/activate
 
 # Python 2
 virtualenv venv/
 . venv/bin/activate
-
-
 ```
 
 In your venv, run pip to install it
@@ -82,11 +85,9 @@ the name of the artist is you are searching for, so thoughtbubble returns a list
 all the artists genius thinks it might be and gives you a choice
 
 ```bash
-thoughtbubble "spoon" mycamera.png
-                             
-     thoughtbubble 0.1.0 
-                       
+$ thoughtbubble "spoon" mycamera.png
 
+thoughtbubble 0.1.0                     
 Searching genius.com for "spoon".
 
 Genius.com is terrible at searching artist names.
@@ -98,10 +99,12 @@ Select an artist from the results it returned:
 [5] Spoon
 [6] Elliphant
 Enter a number[1-6]: 5
+
 Generating a word cloud with lyrics from the top 20 songs by Spoon.
-Scraping lyrics from genius.com
-  [████████████████████████████████████]             
-Making the wordcloud.
+Fetching lyrics from genius.com
+  [████████████████████████████████████]
+               
+Making the word cloud.
 Word cloud written to mycamera.png.
 ```
 
