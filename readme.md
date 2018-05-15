@@ -95,6 +95,8 @@ And finally you can run the dang thing
 thoughtbubble "weezer"
 ```
 
+## usage
+
 The default output is a PNG file named thoughtbubble.png. You can also specify a different name for the output file
 by evoking thoughtbubble with an extra argument.
 ```bash
