@@ -8,6 +8,7 @@ from wordcloud import WordCloud, STOPWORDS
 import requests
 import configparser
 import os
+import re
 import sys
 import json
 from bs4 import BeautifulSoup
@@ -104,14 +105,14 @@ def text_from_genius(artist, access_token, limit):
                 page = requests.get(page_url)
 
                 soup = BeautifulSoup(page.text, 'lxml')
+                soup = soup.find('div', class_="lyrics")
 
-                #ignore_list = ("[Bridge]","[Chorus]","[Guitar]","[Guitar Solo]",
-                #               "[Instrumental]","[Outro]","[Verse]", artist_name)
-
-                chunk = soup.find('div', class_="lyrics").text
+                chunk = soup.text
                 chunk = chunk.replace('\n', ' ').replace('\r', '')
+                chunk = re.sub("\[(.*?)\]", '', chunk)
                 chunk = ' '.join(unique_list(chunk.split()))
                 lyrics += chunk
+
 
         param_payload['page'] += 1
 
