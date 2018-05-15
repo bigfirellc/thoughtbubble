@@ -141,7 +141,7 @@ tags specified in genius like `[Chorus]` and `[Verse]` and `[Rad Solo]`.
 For example, here is a wordcloud output called `frabbit.png`, which would be the result 
 you run `thoughtbubble "Frightened Rabbit" frabbit.png`.
 
-![](frabbit.png)
+![](https://user-images.githubusercontent.com/20565648/40031261-de4d7434-57bc-11e8-9ed5-742646cbb4fd.png)
 
 ## acknowledgements
 
