@@ -110,9 +110,10 @@ Word cloud written to mycamera.png.
 Word clouds at the moment are non-configurable. Repeated words in songs are stripped out, as are song section
 tags specified in genius like `[Chorus]` and `[Verse]` and `[Rad Solo]`.
 
-For example, here is a wordcloud output called `sad.png`, which is the result when you run `thoughtbubble "Radiohead"`.
+For example, here is a wordcloud output called `frabbit.png`, which would be the result 
+you run `thoughtbubble "Frightened Rabbit" frabbit.png`.
 
-![](sad.png)
+![](frabbit.png)
 
 ## acknowledgements
 
