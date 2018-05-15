@@ -8,8 +8,8 @@ that is shown when somebody is having an internal monologue.
 
 Installation is less than difficult. It works on macOS and Ubuntu Linux, not sure about anything else at the moment.
 
-If you have [git](https://git-scm.com/downloads) installed, clone the repository. If not download the zip and unpack it 
-some where nice like your home directory:
+If you have [git](https://git-scm.com/downloads) installed, clone the repository. If not, download the zip and unpack it 
+somewhere nice like your home directory:
 
 ```bash
 cd ~
@@ -37,7 +37,7 @@ For Ubuntu Linux, install python3 and virtualenv
 sudo apt install python3 virtualenv
 ```
 
-Create a virtualenv in somewhere nice, like your home directory
+Create a virtualenv in the thoughtbubble directory
 
 ```bash
 cd ~/thoughtbubble*
