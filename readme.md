@@ -51,11 +51,23 @@ virtualenv venv/
 . venv/bin/activate
 ```
 
-In your venv, run pip to install it
+Your prompt should change now to let you know you are in a virtualenv
+to something like this:
+
+```bash
+(venv) user@compy386:~/thoughtbubble$
+```
+
+Now in your activated virtualenv, run pip to install thoughtbubble with setuptools:
 
 ```bash
 pip install --editable .
 ```
+
+A copy of the CLI will be made in `~/thoughtbubble*/venv/bin/` and added to your
+`$PATH`, so you'll be able to run it straight from where you are.
+
+## configuration
 
 thoughtbubble requires an API token from Genius. Make an account for yourself
 and generate a Client Access Token: https://genius.com/api-clients
@@ -73,20 +85,20 @@ Edit it to include your API token
 access_token = <your token>
 ```
 
-And now you can run the dang thing
+And finally you can run the dang thing
 
 ```bash
 thoughtbubble "weezer"
 ```
 
-Default output is a PNG file named thoughtbubble.png. You can also specify a different name for the output file
-by evoking thoughtbubble with some arguments
+The default output is a PNG file named thoughtbubble.png. You can also specify a different name for the output file
+by evoking thoughtbubble with an extra argument.
 ```bash
 thoughtbubble "Van Halen" hagar.png
 ```
 CLI output isn't that fancy. Sometimes, genius.com has a hard time figuring out what
-the name of the artist is you are searching for, so thoughtbubble returns a list of
-all the artists genius thinks it might be and gives you a choice
+the name of the artist is you are searching for, so thoughtbubble will return a list of
+all the artists genius thinks it might be and gives you a choice:
 
 ```bash
 $ thoughtbubble "spoon" mycamera.png
@@ -114,7 +126,10 @@ Word cloud written to mycamera.png.
 
 ## word clouds
 
-Word clouds at the moment are non-configurable. Repeated words in songs are stripped out, as are song section
+Word clouds at the moment are non-configurable. Future versions will allow user configuration of the font size, 
+dimensions, and background color of the word cloud. 
+
+Repeated words in songs are stripped out, as are song section
 tags specified in genius like `[Chorus]` and `[Verse]` and `[Rad Solo]`.
 
 For example, here is a wordcloud output called `frabbit.png`, which would be the result 
