@@ -127,7 +127,14 @@ def cli(artist, filename):
         click.echo("Invalid thoughtbubble.conf file: Missing [thoughtbubble] header.")
         sys.exit(1)
 
-    text = text_from_genius(artist, config["thoughtbubble"]["access_token"])
+    try:
+        text = text_from_genius(artist, config["thoughtbubble"]["access_token"])
+    except KeyError as e:
+        click.echo("Missing/invalid thoughtbubble.conf file or access_token parameter.")
+        click.echo("Go to https://genius.com/api-clients, get a Client Access Token, and")
+        click.echo("copy it into thoughtbubble.conf.")
+        sys.exit(1)
+
     make_word_cloud(text, artist, filename)
 
 

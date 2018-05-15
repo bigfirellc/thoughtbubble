@@ -42,8 +42,12 @@ Create a virtualenv in the thoughtbubble directory, and activate it:
 ```bash
 cd ~/thoughtbubble*
 
-# Python 3
-virtualenv venv/ -p python3
+# Python 3 on Linux
+virtualenv venv/ -ppython3
+. venv/bin/activate
+
+# Python 3 on macOS with brew
+python3 -m venv venv/
 . venv/bin/activate
 
 # Python 2
