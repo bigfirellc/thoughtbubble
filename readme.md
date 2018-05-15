@@ -1,6 +1,8 @@
 # thoughtbubble
 
-A simple python CLI that creates a PNG wordcloud from a specified artist name. thoughtbubble queries the genius.com API. 
+A simple python CLI that creates a PNG wordcloud from a specified artist name. thoughtbubble 
+queries the genius.com API. It's called "thoughtbubble" like a word balloon in some comic books 
+that is shown when somebody is having an internal monologue.
 
 ## installation
 
