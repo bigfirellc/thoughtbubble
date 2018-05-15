@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 
 base_url = "https://api.genius.com"
 version = "thoughtbubble 0.1.0"
+limit = 100
 
 def make_word_cloud(text, artist, filename):
 
@@ -35,14 +36,14 @@ def make_word_cloud(text, artist, filename):
                    min_font_size=10,
                    font_path="./Inconsolata.otf")
 
-    click.echo("Making the word cloud.")
+    click.echo("\nMaking the word cloud.")
 
     wc.generate(text)
     wc.to_file(filename)
     click.echo("Word cloud written to " + filename + ".\n")
 
 
-def text_from_genius(artist, access_token):
+def text_from_genius(artist, access_token, limit):
     search_url = base_url + "/search"
     param_payload = {'q': artist, 'access_token': access_token}
     headers = {'Authorization': 'Bearer ' + access_token}
@@ -80,31 +81,39 @@ def text_from_genius(artist, access_token):
         click.echo("Unable to find an artist with that name.")
         sys.exit(1)
 
-    click.echo("Generating a word cloud with lyrics from the top 20 songs by " + artist_name + ".")
+    click.echo("Generating a word cloud with lyrics by " + artist_name + ".")
 
     search_url = base_url + "/artists/" + str(artist_id) + "/songs"
-    r = requests.get(search_url, headers=headers)
-    s = json.loads(r.content)
+    param_payload = {'per_page': 10, 'page': 1}
+    pagination = limit / param_payload['per_page']
 
     lyrics = ""
-
     click.echo("Fetching lyrics from genius.com.")
 
-    with click.progressbar(s["response"]["songs"], show_percent=False,
-                           fill_char=click.style(u'█', fg='green')) as bar:
-        for hit in bar:
-            page_url = "http://genius.com" + hit["path"]
-            page = requests.get(page_url)
+    while param_payload['page'] <= pagination:
 
-            soup = BeautifulSoup(page.text, 'lxml')
+        r = requests.get(search_url, params=param_payload, headers=headers)
+        s = json.loads(r.content)
+        barlabel="[" + str(param_payload['page']) + "/" + str(pagination) + "]"
 
-            ignore_list = ("[Bridge]","[Chorus]","[Guitar]","[Guitar Solo]",
-                           "[Instrumental]","[Outro]","[Verse]", artist_name)
+        with click.progressbar(s["response"]["songs"], show_percent=True,
+                               fill_char=click.style(u'█', fg='green'),
+                               label=barlabel ) as bar:
+            for hit in bar:
+                page_url = "http://genius.com" + hit["path"]
+                page = requests.get(page_url)
 
-            chunk = soup.find('div', class_="lyrics").text
-            chunk = chunk.replace('\n', ' ').replace('\r', '')
-            chunk = ' '.join(unique_list(chunk.split()))
-            lyrics += chunk
+                soup = BeautifulSoup(page.text, 'lxml')
+
+                #ignore_list = ("[Bridge]","[Chorus]","[Guitar]","[Guitar Solo]",
+                #               "[Instrumental]","[Outro]","[Verse]", artist_name)
+
+                chunk = soup.find('div', class_="lyrics").text
+                chunk = chunk.replace('\n', ' ').replace('\r', '')
+                chunk = ' '.join(unique_list(chunk.split()))
+                lyrics += chunk
+
+        param_payload['page'] += 1
 
     return lyrics
 
@@ -129,7 +138,7 @@ def cli(artist, filename):
         sys.exit(1)
 
     try:
-        text = text_from_genius(artist, config["thoughtbubble"]["access_token"])
+        text = text_from_genius(artist, config["thoughtbubble"]["access_token"], limit)
     except KeyError as e:
         click.echo("Missing/invalid thoughtbubble.conf file or access_token parameter.")
         click.echo("Go to https://genius.com/api-clients, get a Client Access Token, and")
