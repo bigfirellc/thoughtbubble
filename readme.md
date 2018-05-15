@@ -30,6 +30,22 @@ In your venv, run pip to install it
 pip install --editable .
 ```
 
+Thoughtbubble requires an API token from Genius. Make an account for yourself
+and generate a Client Access Token: https://genius.com/api-clients
+
+Copy thoughtbubble.conf.example to thoughtbubble.conf
+
+```bash
+cp thoughtbubble.conf.example thoughtbubble.conf
+```
+
+Edit it to include your API token
+
+```commandline
+[thoughtbubble]
+access_token = <your token>
+```
+
 And now you can run the dang thing
 
 ```bash

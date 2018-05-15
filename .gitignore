@@ -103,6 +103,7 @@ venv3/
 .idea/
 
 # png files
+thoughtbubble.png
 
 # config file with access_token
 thoughtbubble.conf
