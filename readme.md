@@ -15,8 +15,9 @@ cd ~
 git clone https://github.com/nqnzp/thoughtbubble
 
 # or
+cd ~
 wget https://github.com/nqnzp/thoughtbubble/archive/master.zip
-unzip 
+unzip master.zip
 ```
 
 Make sure you have python installed, 2 or 3 should work.
