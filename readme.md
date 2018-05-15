@@ -4,24 +4,44 @@ A simple python CLI that creates a PNG wordcloud from a specified artist name. t
 
 ## installation
 
-Installation is less than difficult. It works on Ubuntu Linux, not sure about anything else at the moment.
+Installation is less than difficult. It works on macOS and Ubuntu Linux, not sure about anything else at the moment.
 
-Clone the repository or download the zip and unpack it
+Clone the repository or download the zip and unpack it some where nice like your home directory
 
 ```bash
+cd ~
 git clone https://github.com/nqnzp/thoughtbubble
+
+# or
+wget https://github.com/nqnzp/thoughtbubble/archive/master.zip
+unzip 
 ```
 
-Create a virtualenv
+Make sure you have python installed, 2 or 3 should work.
+
+For macOS, install [Homebrew](https://brew.sh), then install python
 
 ```bash
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install python3
+```
+
+Create a virtualenv in somewhere nice, like your home directory
+
+```bash
+
+cd ~/thoughtbubble*
+
+# Python 3
+python3 -m venv venv/
+. venv/bin/activate
+
 # Python 2
 virtualenv venv/
 . venv/bin/activate
 
-# Python 3
-python3 -m venv venv/.
-. venv/bin/activate
+
 ```
 
 In your venv, run pip to install it
@@ -30,7 +50,7 @@ In your venv, run pip to install it
 pip install --editable .
 ```
 
-Thoughtbubble requires an API token from Genius. Make an account for yourself
+thoughtbubble requires an API token from Genius. Make an account for yourself
 and generate a Client Access Token: https://genius.com/api-clients
 
 Copy thoughtbubble.conf.example to thoughtbubble.conf
@@ -85,18 +105,18 @@ Making the wordcloud.
 Word cloud written to mycamera.png.
 ```
 
-## Wordclouds
+## word clouds
 
-Wordclouds at the moment are small and non-configurable. Repeated words in songs are stripped out, as are song section
-tags specified in genius like `[Chorus]` and `[Verse]`.
+Word clouds at the moment are non-configurable. Repeated words in songs are stripped out, as are song section
+tags specified in genius like `[Chorus]` and `[Verse]` and `[Rad Solo]`.
 
 For example, here is a wordcloud output called `sad.png`, which is the result when you run `thoughtbubble "Radiohead"`.
 
 ![](sad.png)
 
-## Acknowledgements
+## acknowledgements
 
-This project uses some really nice code written by other people to do something dirty.
+This project wouldn't have been possible without the hard work of other much smarter developers:
 
 * [Click](https://github.com/pallets/click)
 * [word_cloud](https://github.com/amueller/word_cloud)
