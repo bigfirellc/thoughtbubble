@@ -37,7 +37,7 @@ For Ubuntu Linux, install python3 and virtualenv
 sudo apt install python3 virtualenv
 ```
 
-Create a virtualenv in the thoughtbubble directory
+Create a virtualenv in the thoughtbubble directory, and activate it:
 
 ```bash
 cd ~/thoughtbubble*
