@@ -36,23 +36,16 @@ For Ubuntu Linux, install python3 and virtualenv
 sudo apt install python3 virtualenv
 ```
 
-Create a virtualenv in the thoughtbubble directory, and activate it:
+Create a directory for the virtual environment, and activate it:
 
 ```bash
-cd ~/thoughtbubble*
-
 # Python 3 on Linux
-virtualenv venv/ -ppython3
-. venv/bin/activate
+virtualenv ~/vnv/thoughbubble -p python3
+. ~/vnv/thoughbubble/bin/activate
 
 # Python 3 on macOS with brew
-python3 -m venv venv/
-. venv/bin/activate
-
-# Python 2
-virtualenv venv/
-. venv/bin/activate
-```
+python3 -m venv ~/vnv/thoughbubble
+. ~/vnv/thoughbubble/bin/activate
 
 Your prompt should change now to let you know you are in a virtualenv
 to something like this:
