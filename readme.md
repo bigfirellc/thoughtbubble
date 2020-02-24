@@ -87,6 +87,12 @@ And finally you can run the dang thing
 thoughtbubble "weezer"
 ```
 
+If you're on macOS, you can open the image you just created with Preview
+```bash
+open thoughtbubble.png
+```
+
+
 ## usage
 
 The default output is a PNG file named thoughtbubble.png. You can also specify a different name for the output file
