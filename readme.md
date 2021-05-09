@@ -29,7 +29,7 @@ Now in your activated virtualenv, run pip to install thoughtbubble with setuptoo
 pip install --editable .
 ```
 
-A copy of the CLI will be made in `~/thoughtbubble*/venv/bin/` and added to your
+A copy of the CLI will be made in `./venv/bin/` and added to your
 `$PATH`, so you'll be able to run it straight from where you are.
 
 ## configuration
@@ -43,7 +43,7 @@ Copy thoughtbubble.conf.example to thoughtbubble.conf
 cp thoughtbubble.conf.example thoughtbubble.conf
 ```
 
-Edit it to include your API token
+Edit it to include your Access Token
 
 ```commandline
 [thoughtbubble]
