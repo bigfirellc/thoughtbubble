@@ -1,51 +1,20 @@
 # thoughtbubble
 
-A simple python CLI that creates a PNG wordcloud from a specified artist name. thoughtbubble 
-queries the genius.com API.
+A simple python CLI that creates a PNG wordcloud from a specified artist name. thoughtbubble queries the genius.com API.
 
 ## installation
 
-Installation is less than difficult. It works on macOS and Ubuntu Linux, not sure about anything else at the moment.
-
-If you have [git](https://git-scm.com/downloads) installed, clone the repository. If not, download the zip and unpack it 
-somewhere nice like your home directory:
+Install virtualenv if you don't have it already
 
 ```bash
-cd ~
-git clone https://github.com/nqnzp/thoughtbubble
-
-# or
-cd ~
-wget https://github.com/nqnzp/thoughtbubble/archive/master.zip
-unzip master.zip
-```
-
-Make sure you have python installed, 2 or 3 should work.
-
-For macOS, install [Homebrew](https://brew.sh), then install python
-
-```bash
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-brew install python3
-```
-
-For Ubuntu Linux, install python3 and virtualenv
-
-```bash
-sudo apt install python3 virtualenv
+pip install virtualenv
 ```
 
 Create a directory for the virtual environment, and activate it:
 
 ```bash
-# Python 3 on Linux
-virtualenv ~/vnv/thoughbubble -p python3
-. ~/vnv/thoughbubble/bin/activate
-
-# Python 3 on macOS with brew
-python3 -m venv ~/vnv/thoughbubble
-. ~/vnv/thoughbubble/bin/activate
+python3 -m virtualenv venv
+. ~/venv/bin/activate
 
 Your prompt should change now to let you know you are in a virtualenv
 to something like this:
@@ -91,7 +60,6 @@ If you're on macOS, you can open the image you just created with Preview
 ```bash
 open thoughtbubble.png
 ```
-
 
 ## usage
 
