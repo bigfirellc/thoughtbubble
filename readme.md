@@ -115,3 +115,5 @@ This project wouldn't have been possible without the hard work of other much sma
 
 * [Click](https://github.com/pallets/click)
 * [word_cloud](https://github.com/amueller/word_cloud)
+* <https://bigishdata.com/2016/09/27/getting-song-lyrics-from-geniuss-api-scraping/>
+* <http://www.compjour.org/warmups/govt-text-releases/intro-to-bs4-lxml-parsing-wh-press-briefings/>

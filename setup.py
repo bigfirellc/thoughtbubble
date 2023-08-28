@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='thoughtbubble',
-    version='0.1',
+    version='0.2',
     py_modules=['thoughtbubble'],
     install_requires=[
         'wordcloud',
@@ -10,7 +10,11 @@ setup(
         'requests',
         'configparser',
         'bs4',
-        'lxml'
+        'lxml',
+        'pandas',
+        'html5lib',
+        'nltk',
+        'tqdm'
     ],
     entry_points='''
         [console_scripts]

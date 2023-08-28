@@ -107,3 +107,7 @@ thoughtbubble.png
 
 # config file with access_token
 thoughtbubble.conf
+
+.DS_Store
+Pipfile
+Pipfile.lock
