@@ -5,8 +5,8 @@ import click
 import configparser
 import json
 import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
+nltk.download('stopwords', quiet=True)
+nltk.download('punkt', quiet=True)
 import pandas as pd
 import os
 import requests
@@ -76,7 +76,10 @@ def get_songs(artist_name, artist_id, access_token, limit):
     param_payload = {'per_page': per_page, 'page': 1, 'sort': "popularity"}
     pagination = limit / param_payload['per_page']
 
+    # Setting up a progress bar with TQDM
     pbar = tqdm(total = int(pagination * per_page), colour = 'GREEN')
+
+    # Looping through each page of the request
     while param_payload['page'] <= pagination:
 
         r = requests.get(search_url, params=param_payload, headers=headers)
@@ -92,6 +95,8 @@ def get_songs(artist_name, artist_id, access_token, limit):
         pbar.update(int(1 * per_page))
     
     pbar.close()
+
+    # Removing songs that don't match the artist name
     songs_df = songs_df[songs_df.primary_artist_name == artist_name]
 
     return songs_df
@@ -140,17 +145,18 @@ def make_word_cloud(songs_df, artist_name, filename):
     # Removing NLTK and other stopwords
     songs_df['lyrics'] = songs_df['lyrics'].apply(lambda x: [word for word in x if word not in stop_words])
 
-    wc = WordCloud(max_words=100,
-                   width=800,
+    breakpoint()
+    
+    # Convert all of the lyrics rows in our Dataframe to a single list
+    lyrics = ' '.join(sum(songs_df['lyrics'].to_list(),[]))
+
+    wc = WordCloud(width=800,
                    height=600,
-                   min_word_length=3,
-                   collocations=True,
-                   font_path="./Inconsolata.otf")
+                   min_word_length=4,
+                   collocations=False,
+                   font_path="./Roboto-Regular.ttf")
 
     click.secho("\nMaking the word cloud.", fg='yellow')
-
-    # Yikes!
-    lyrics = ' '.join(sum(songs_df['lyrics'].to_list(),[]))
 
     wc.generate(lyrics)
     wc.to_file(filename)

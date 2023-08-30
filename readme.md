@@ -1,29 +1,29 @@
 # thoughtbubble
 
-A simple python CLI that creates a PNG wordcloud from a specified artist name. thoughtbubble queries the genius.com API.
+A simple Python commandline tool that creates a PNG word cloud from a specified artist name, querying the [Genius API.](https://docs.genius.com)
 
-## installation
+## Installation
 
-Clone the repo somewhere nice and change to the new directory it just created.
+Clone the repository somewhere nice and change to the new directory you've just created.
 
 ```
 git clone https://github.com/lesservehicle/thoughtbubble.git
 cd thoughtbubble
 ```
 
-Install pipenv if you don't have it already:
+Install [pipenv](https://pipenv.pypa.io/en/latest/installation/) if you don't have it already.
 
 ```bash
 pip install pipenv
 ```
 
-Use `pipenv` to install the package and create a new virtual environment:
+Use `pipenv` to install the dependencies and create a new virtual environment.
 
 ```bash
 pipenv install .
 ```
 
-Use `pipenv shell` to open the virtual environment. 
+Use `pipenv shell` to open the new virtual environment.
 
 ```
 % pipenv shell
@@ -45,9 +45,17 @@ Now in your activated virtualenv, run pip to install thoughtbubble with setuptoo
 pip install -e .
 ```
 
-A copy of the CLI will be made in your virtual environment and added to your  `$PATH`, so you'll be able to run it straight from where you are.
+A copy of thoughtbubble will be made in your virtual environment and added to your  `$PATH`, so you'll be able to run it wherever you are.
 
-## configuration
+If you leave your terminal and come back, you should be able to go straight to your repository directory, enable the virtual environment and run thoughtbubble.
+
+```
+cd ~/thoughtbubble
+pipenv shell
+thoughtbubble "Mott the Hoople"
+```
+
+## Configuration
 
 thoughtbubble requires an API token from Genius. Make an account for yourself and generate a Client Access Token: [https://genius.com/api-clients](https://genius.com/api-clients)
 
@@ -65,34 +73,36 @@ access_token = <your token>
 limit = 100
 ```
 
-And finally you can run the dang thing
+And finally you can run the dang thing.
 
 ```bash
 thoughtbubble "weezer"
 ```
 
-If you're on macOS, you can open the image you just created with Preview
+If you're on macOS, you can open the image you just created with Preview. If you're on Windows or Linux, I'm sorry.
 
 ```bash
 open thoughtbubble.png
 ```
 
-## usage
+## Usage
 
-The default output is a PNG file named thoughtbubble.png. You can also specify a different name for the output file by evoking thoughtbubble with an extra argument.
+Simply feed thoughtbubble the name of an artist or band that you would like to create a word cloud for. Use double-quotes so it doesn't get confused.
+
+```
+thoughtbubble "Hot Water Music"
+```
+
+The default output is a PNG file named after the artist you entered, eg. `Hot Water Music.png`. You can also specify a different name for the output file by evoking thoughtbubble with an extra argument.
 
 ```bash
 thoughtbubble "Van Halen" nohagar.png
 ```
 
-CLI output isn't that fancy. Sometimes, genius.com has a hard time figuring out what the name of the artist is you are searching for, so thoughtbubble will return a list of all the artists genius thinks it might be and gives you a choice:
+Sometimes, Genius has a hard time figuring out what the name of the artist is that you are searching for. So, thoughtbubble will return a list of all the artists Genius thinks it might be and gives you a menu. Here is an example with a band that is named after both an eating utensil and a song by Can.
 
 ```bash
 (thoughtbubble) adam@compy386 thoughtbubble % thoughtbubble "spoon"
-[nltk_data] Downloading package stopwords to /Users/adam/nltk_data...
-[nltk_data]   Package stopwords is already up-to-date!
-[nltk_data] Downloading package punkt to /Users/adam/nltk_data...
-[nltk_data]   Package punkt is already up-to-date!
 
 thoughtbubble 0.2.0
 https://github.com/lesservehicle/thoughtbubble
@@ -125,19 +135,29 @@ Making the word cloud.
 Word cloud written to "Spoon.png"!
 ```
 
-## word clouds
+## Word Clouds
 
 Word clouds at the moment are non-configurable. Future versions will allow user configuration of the font size, dimensions, and background color of the word cloud.
 
 Repeated words in songs are stripped out, as are song section tags specified in genius like `[Chorus]` and `[Verse]` and `[Guitar Solo]`. Words are normalized to lowercase, tokenized, and stopwords are removed.
 
-For example, here is a wordcloud output called `frabbit.png`, which would be the result you run `thoughtbubble "Frightened Rabbit" frabbit.png`.
+For example, here is a the output when you run `thoughtbubble "Frightened Rabbit" frabbit.png`. I'm using a cool utility called `imgcat` to be able to display the word cloud image directly in my terminal window.
 
 ![Example](example.png "Example")
 
-## acknowledgements
+## Roadmap
 
-This project wouldn't have been possible without the hard work of other much smarter developers:
+* Allow the user to select the limit as a commandline parameter
+* Allow the user to turn off the default output coloring
+* Allow user configuration of word cloud dimensions, fonts, font sizes, colors
+* Multi-language support (currently english only)
+* Make thoughtbubble a proper package on pypi.org to simplify the installation process
+* Use pandas to output additional statistical information about the lyrics other than just word clouds
+* Make thoughtbubble a website
+
+## Acknowledgements
+
+This project wouldn't have been possible without the hard work of other much smarter developers.
 
 * [Click](https://github.com/pallets/click)
 * [word_cloud](https://github.com/amueller/word_cloud)
