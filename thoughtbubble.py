@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # thoughbubble.py
 
-import click
 import configparser
 import json
 import nltk
@@ -12,24 +11,38 @@ import os
 import requests
 import sys
 from bs4 import BeautifulSoup
-from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from tqdm import tqdm
 from wordcloud import WordCloud, STOPWORDS
+import click
 
 version = "thoughtbubble 0.2.0"
 base_url = "https://api.genius.com"
 
 
-def get_artist(artist, access_token):
+def get_artist(artist, access_token, quiet=False):
+    '''
+    Returns the result of an artist search in the Genius API
+
+            Parameters:
+                    artist (str): A search query for an artist
+                    access_token (str): Genius API Access Token
+
+            Returns:
+                    artist_name (str): Search result of artist name
+                    artist_id (int): The artist's ID in Genius
+    '''
 
     search_url = base_url + "/search"
     param_payload = {'q': artist, 'access_token': access_token}
+    artist_name = None
+    artist_id = None
     
     r = requests.get(search_url, params=param_payload)
     a = json.loads(r.content)
 
-    click.secho(f"\nSearching Genius for \"{artist}\".", fg='yellow')
+    if not quiet:
+        click.secho(f"\nSearching Genius for \"{artist}\".", fg='yellow')
 
     l = list()  # a list of tuples
     for hit in a["response"]["hits"]:
@@ -44,8 +57,13 @@ def get_artist(artist, access_token):
     l = list(myset)
 
     if len(l) > 1:
-        click.secho("\nGenius is terrible at searching artist names!", fg='red')
-        click.secho("Select an artist from the results it returned:", fg='red')
+        for item in l:
+            if item[0].lower() == artist.lower():
+                artist_name = item[0]
+                artist_id = item[1]
+        if not quiet:
+            click.secho("\nGenius is terrible at searching artist names!", fg='red')
+            click.secho("Select an artist from the results it returned:", fg='red')
         i = 0
         for item in l:
             click.echo(f"[{str(i + 1)}]", nl=False)
@@ -55,20 +73,40 @@ def get_artist(artist, access_token):
         num = int(num) - 1
         artist_name = l[num][0]
         artist_id = l[num][1]
+
+    elif l is None:
+        if not quiet:
+            click.secho(f"\nArtist \"{artist}\" not found!", fg='red')
+        return None, None
     else:
-        click.secho(f"\nSuccessfully found {l[0][0]} on Genius!", fg='green')
+        if not quiet:
+            click.secho(f"\nSuccessfully found {l[0][0]} on Genius!", fg='green')
         artist_name = l[0][0]
         artist_id = l[0][1]
-
+    
     if not (artist_name):
-        click.echo("Unable to find an artist with that name.")
-        sys.exit(1)
+        if not quiet:
+            click.secho(f"\nArtist \"{artist}\" not found!", fg='red')
+        return None, None
     else:
         return artist_name, artist_id
 
-def get_songs(artist_name, artist_id, access_token, limit):
+def get_songs(artist_name, artist_id, access_token, limit, quiet=False):
+    '''
+    Returns the result of a search in the Genius API for songs by a specified artist
 
-    click.secho(f"\nDownloading data for the {str(limit)} most popular songs by {artist_name}.", fg='yellow')
+            Parameters:
+                    artist_name (str): Artist's name
+                    artist_id (str): Artist's ID in Genius
+                    access_token (str): Genius API Access Token
+                    limit (int): Number of songs returned
+
+            Returns:
+                    songs_df (Dataframe): Songs and attached metadata
+    '''
+
+    if not quiet:
+        click.secho(f"\nDownloading data for the {str(limit)} most popular songs by {artist_name}.", fg='yellow')
 
     headers = {'Authorization': 'Bearer ' + access_token}
     search_url = base_url + "/artists/" + str(artist_id) + "/songs"
@@ -77,7 +115,8 @@ def get_songs(artist_name, artist_id, access_token, limit):
     pagination = limit / param_payload['per_page']
 
     # Setting up a progress bar with TQDM
-    pbar = tqdm(total = int(pagination * per_page), colour = 'GREEN')
+    if not quiet:
+        pbar = tqdm(total = int(pagination * per_page), colour = 'GREEN')
 
     # Looping through each page of the request
     while param_payload['page'] <= pagination:
@@ -92,36 +131,54 @@ def get_songs(artist_name, artist_id, access_token, limit):
             songs_df = pd.concat([songs_df, temp_df], ignore_index=True)
 
         param_payload['page'] += 1
-        pbar.update(int(1 * per_page))
+        if not quiet:
+            pbar.update(int(1 * per_page))
     
-    pbar.close()
-
+    if not quiet: 
+        pbar.close()
+    
     # Removing songs that don't match the artist name
     songs_df = songs_df[songs_df.primary_artist_name == artist_name]
+    songs_df.drop(columns=['featured_artists'], inplace=True)
 
     return songs_df
 
-def get_lyrics(songs_df):
+def get_lyrics(songs_df, quiet=False):
 
-    click.secho(f"\nDownloading lyrics.", fg='yellow')
+    if not quiet:
+        click.secho(f"\nDownloading lyrics.", fg='yellow')
 
-    for index, row in tqdm(songs_df.iterrows(), total=songs_df.shape[0], colour = 'GREEN'):
-        page_url = "http://genius.com" + row['api_path']
-        page = requests.get(page_url)
-        soup = BeautifulSoup(page.content, 'lxml')
-        soup_div = soup.find('div', class_="Lyrics__Container-sc-1ynbvzw-5 Dzxov")
+    if not quiet:
+        for index, row in tqdm(songs_df.iterrows(), total=songs_df.shape[0], colour = 'GREEN'):
+            page_url = "http://genius.com" + row['api_path']
+            page = requests.get(page_url)
+            soup = BeautifulSoup(page.content, 'lxml')
+            soup_div = soup.find('div', class_="Lyrics__Container-sc-1ynbvzw-5 Dzxov")
 
-        if soup_div is not None:
-            chunk = soup_div.get_text(" ")
-            songs_df.loc[index, 'lyrics'] = chunk
-        else:
-            songs_df.loc[index, 'lyrics'] = ""
+            if soup_div is not None:
+                chunk = soup_div.get_text(" ")
+                songs_df.loc[index, 'lyrics'] = chunk
+            else:
+                songs_df.loc[index, 'lyrics'] = ""
+    else:
+        for index, row in songs_df.iterrows():
+            page_url = "http://genius.com" + row['api_path']
+            page = requests.get(page_url)
+            soup = BeautifulSoup(page.content, 'lxml')
+            soup_div = soup.find('div', class_="Lyrics__Container-sc-1ynbvzw-5 Dzxov")
+
+            if soup_div is not None:
+                chunk = soup_div.get_text(" ")
+                songs_df.loc[index, 'lyrics'] = chunk
+            else:
+                songs_df.loc[index, 'lyrics'] = ""                     
 
     return songs_df
 
-def make_word_cloud(songs_df, artist_name, filename):
+def make_word_cloud(songs_df, artist_name, filename, quiet=False):
 
-    click.secho(f"\nCleaning up the data set.", fg='yellow')
+    if not quiet:
+        click.secho(f"\nCleaning up the data set.", fg='yellow')
 
     # Converting words to lowercase
     songs_df['lyrics'] = songs_df['lyrics'].apply(lambda x: x.lower() if isinstance(x, str) else x)
@@ -136,32 +193,28 @@ def make_word_cloud(songs_df, artist_name, filename):
     songs_df['lyrics'] = songs_df['lyrics'].apply(word_tokenize)
     
     # Setting some stopwords
-    stop_words = set(stopwords.words('english'))
+    stop_words = set(nltk.corpus.stopwords.words('english'))
     stop_words.update(set(STOPWORDS))
     stop_words.update(word_tokenize(artist_name.lower()))
     stop_words.update(["chorus", "bridge", "verse", "intro", "outro", "solo",
-                        "guitar", "refrain", "lyric"])
+                        "guitar", "refrain", "lyric", "prechorus"])
 
     # Removing NLTK and other stopwords
     songs_df['lyrics'] = songs_df['lyrics'].apply(lambda x: [word for word in x if word not in stop_words])
-
-    breakpoint()
     
     # Convert all of the lyrics rows in our Dataframe to a single list
     lyrics = ' '.join(sum(songs_df['lyrics'].to_list(),[]))
 
-    wc = WordCloud(width=800,
-                   height=600,
-                   min_word_length=4,
-                   collocations=False,
-                   font_path="./Roboto-Regular.ttf")
+    wc = WordCloud(width=800, height=600, min_word_length=4, collocations=False, font_path="./Roboto-Regular.ttf")
 
-    click.secho("\nMaking the word cloud.", fg='yellow')
+    if not quiet:
+        click.secho("\nMaking the word cloud.", fg='yellow')
 
     wc.generate(lyrics)
     wc.to_file(filename)
 
-    click.secho(f"\nWord cloud written to \"{filename}\"!\n", fg='green')
+    if not quiet:
+        click.secho(f"\nWord cloud written to \"{filename}\"!\n", fg='green')
 
     return songs_df
 
@@ -211,6 +264,8 @@ def cli(artist, filename):
 
     if filename == "":
         filename = f"{artist_name}.png"
+
+    filename = f"assets/{filename}"
 
     try:
         songs_df = make_word_cloud(songs_df, artist_name, filename)

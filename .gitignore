@@ -111,3 +111,9 @@ thoughtbubble.conf
 .DS_Store
 Pipfile
 Pipfile.lock
+
+# vscode
+.vscode
+
+# assets directory
+assets/

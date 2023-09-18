@@ -14,7 +14,11 @@ setup(
         'pandas',
         'html5lib',
         'nltk',
-        'tqdm'
+        'tqdm',
+        'Flask',
+        'dash',
+        'dash-bootstrap-components',
+        'taipy'
     ],
     entry_points='''
         [console_scripts]
