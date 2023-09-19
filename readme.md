@@ -1,5 +1,7 @@
 # thoughtbubble
 
+[![Pylint](https://github.com/lesservehicle/thoughtbubble/actions/workflows/pylint.yml/badge.svg)](https://github.com/lesservehicle/thoughtbubble/actions/workflows/pylint.yml)
+
 A simple Python commandline tool that creates a PNG word cloud from a specified artist name, querying the [Genius API.](https://docs.genius.com)
 
 ## Installation
