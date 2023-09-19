@@ -238,17 +238,17 @@ def make_word_cloud(state):
 
     notify(state, "info", "Making word cloud...")
 
-    wc = WordCloud(
+    wordcloud = WordCloud(
         width=800,
         height=600,
         min_word_length=4,
         collocations=False,
         font_path="./Roboto-Regular.ttf",
     )
-    wc.generate(lyrics)
+    wordcloud.generate(lyrics)
 
     filename = f"assets/{state.ARTIST_NAME}.png"
-    wc.to_file(filename)
+    wordcloud.to_file(filename)
     state.FILENAME = filename
     state.refresh("filename")
 
