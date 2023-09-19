@@ -1,3 +1,6 @@
+"""pip install -e .
+"""
+
 from setuptools import setup
 
 setup(
@@ -16,9 +19,8 @@ setup(
         'nltk',
         'tqdm',
         'Flask',
-        'dash',
-        'dash-bootstrap-components',
-        'taipy'
+        'taipy',
+        'pylint'
     ],
     entry_points='''
         [console_scripts]

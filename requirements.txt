@@ -1,0 +1,13 @@
+wordcloud
+Click
+requests
+configparser
+bs4
+lxml
+pandas
+html5lib
+nltk
+tqdm
+Flask
+taipy
+pylint

@@ -147,7 +147,7 @@ For example, here is a the output when you run `thoughtbubble "Frightened Rabbit
 
 ## Taipy App
 
-Thoughtbubble comes bundled with a [Taipy](https://docs.taipy.io/en/release-2.3/) app now. Install all the prerequisites as above, and run the Taipy app:
+Thoughtbubble comes bundled with a [Taipy](https://docs.taipy.io/en/release-2.3/) web app now. Install all the prerequisites as above, and run the Taipy app:
 
 ```
 $ python app.py --threading
