@@ -1,3 +1,6 @@
+"""pip install -e .
+"""
+
 from setuptools import setup
 
 setup(
@@ -14,7 +17,10 @@ setup(
         'pandas',
         'html5lib',
         'nltk',
-        'tqdm'
+        'tqdm',
+        'Flask',
+        'taipy',
+        'pylint'
     ],
     entry_points='''
         [console_scripts]

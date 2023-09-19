@@ -145,15 +145,28 @@ For example, here is a the output when you run `thoughtbubble "Frightened Rabbit
 
 ![Example](example.png "Example")
 
+## Taipy App
+
+Thoughtbubble comes bundled with a [Taipy](https://docs.taipy.io/en/release-2.3/) web app now. Install all the prerequisites as above, and run the Taipy app:
+
+```
+$ python app.py --threading
+[2023-09-17 22:43:03][Taipy][INFO]  * Server starting on http://127.0.0.1:5000
+```
+
+And now you should be able to see the Taipy app in your browser at [http://127.0.0.1:5000](http://127.0.0.1:5000). It's really rough right now. Once I smooth out the details, I'll have some more instructions on how to deploy it properly.
+
 ## Roadmap
 
+* Fix up the Taipy app to look nice
+* Migrate the backend to Taipy Core
+* Migrate much of the code base to use [LyricsGenius](https://lyricsgenius.readthedocs.io/en/master/)
 * Allow the user to select the limit as a commandline parameter
 * Allow the user to turn off the default output coloring
 * Allow user configuration of word cloud dimensions, fonts, font sizes, colors
 * Multi-language support (currently english only)
 * Make thoughtbubble a proper package on pypi.org to simplify the installation process
 * Use pandas to output additional statistical information about the lyrics other than just word clouds
-* Make thoughtbubble a website
 
 ## Acknowledgements
 
