@@ -146,9 +146,9 @@ def get_songs(state):
 
     state.HEADER = top10_df.loc[0, "header_image_url"]
     state.TOP10_DF = top10_df
-    state.refresh("songs_df")
-    state.refresh("top10_df")
-    state.refresh("top10_lov")
+    state.refresh("SONGS_DF")
+    state.refresh("TOP10_DF")
+    state.refresh("TOP10_LOV")
 
 
 def get_lyrics(state):
@@ -250,7 +250,7 @@ def make_word_cloud(state):
     filename = f"assets/{state.ARTIST_NAME}.png"
     wordcloud.to_file(filename)
     state.FILENAME = filename
-    state.refresh("filename")
+    state.refresh("FILENAME")
 
 
 def on_click(state):
@@ -283,7 +283,7 @@ PAGE = """
 
 <topten|part|render={TOP10_DF.empty is not True}
 ### Top 10 Songs on Genius ### {: .h3}
-<|{TOP10_SEL}|tree|lov={top10_lov}|>
+<|{TOP10_SEL}|tree|lov={TOP10_LOV}|>
 |topten>
 
 <image|part|render={FILENAME is not None}
