@@ -11,3 +11,4 @@ tqdm
 Flask
 taipy
 pylint
+lyricsgenius
