@@ -1,16 +1,13 @@
 """thoughtbubble Taipy app
 """
 import configparser
-import json
 import os
 import sys
-import requests
 import nltk
 from lyricsgenius import Genius
 import pandas as pd
-from bs4 import BeautifulSoup
 from nltk.tokenize import word_tokenize
-from taipy.gui import Gui, Icon, notify, Markdown
+from taipy.gui import Gui, Icon, notify
 from wordcloud import WordCloud, STOPWORDS
 
 nltk.download("stopwords", quiet=True)
@@ -131,7 +128,7 @@ def make_word_cloud(state):
     state.refresh("LYRICS_COUNT")
     state.FILENAME = filename
     state.refresh("FILENAME")
-    
+
 
 def on_search_button(state):
     """Action taken upon clicking the button under the search field
@@ -157,16 +154,13 @@ def on_search_button(state):
     search_results = genius.search_artists(state.SEARCH)
 
     if len(search_results['sections'][0]['hits']) > 0:
-
         for hit in search_results['sections'][0]['hits']:
             result = hit['result']
             state.SEARCH_LOV.append((str(result['id']), Icon(result['image_url'], result['name'])))
 
         state.refresh("SEARCH_LOV")
-    
     else:
         notify(state, "error", f"Can't find anything matching \"{state.SEARCH}\"!")
-
 
 
 def on_select_button(state):
@@ -199,9 +193,9 @@ def on_select_button(state):
 
     notify(state, "info", f"Pulling information about {artist['name']}...")
     state.ARTIST_DF = pd.json_normalize(artist, sep="_")
-    
+
     notify(state, "info", f"Pulling songs from {artist['name']}...")
-    
+
     page = 1
     songs = []
 
