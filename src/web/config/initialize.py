@@ -12,7 +12,7 @@ def get_config_file():
     # Get settings from the user's thoughtbubble.conf file if it exists
     config = configparser.ConfigParser()
     try:
-        config.read(os.path.expanduser("config/thoughtbubble.conf"))
+        config.read(os.path.expanduser("src/web/config/thoughtbubble.conf"))
     except configparser.MissingSectionHeaderError as e:
         print("Invalid thoughtbubble.conf file: Missing [thoughtbubble] header.")
         sys.exit(1)

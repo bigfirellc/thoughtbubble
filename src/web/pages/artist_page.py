@@ -1,4 +1,5 @@
-from taipy.gui import Markdown
+from taipy.gui import Markdown, Html
+
 
 artist_md = Markdown("""
 <|layout|columns=10vw 320px 1 10vw|gap=20px|class_name=align-columns-top
@@ -19,7 +20,7 @@ artist_md = Markdown("""
 <|{artist_data.loc[0]['image_url']}|image|width=320px|>
 |>
 <|part|class_name=align-item-top|render={artist_data.empty is not True}
-<|{artist_data.loc[0]['description_plain']}|>
+<|{artist_data.loc[0]['description_html']}|>
 |>
 <|part
 |>

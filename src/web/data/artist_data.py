@@ -6,7 +6,7 @@ def get_artist_data(state):
     genius = Genius(get_access_token())
     genius.retries = 3
     genius.timeout = 10
-    genius.response_format = 'plain'
+    genius.response_format = 'html'
 
     artist = genius.artist(state.selected_artist)['artist']
 

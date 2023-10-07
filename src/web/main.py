@@ -1,6 +1,6 @@
 """thoughtbubble Taipy app
 """
-from taipy.gui import Gui
+from taipy.gui import Gui, Html
 from pages import root_md, artist_md, albums_md, songs_md, lyrics_md, word_cloud_md
 import pandas as pd
 
@@ -30,7 +30,6 @@ stylekit = {
 
 gui = Gui(pages=pages)
 
-
 if __name__ == '__main__':
     gui.run(
         css_file="main.css",
@@ -44,5 +43,6 @@ if __name__ == '__main__':
         debug=False,
         notebook_proxy=False,
         single_client=False,
-        ngrok_token="1xQlZTyxickaArRYswMyWWmN17I_3H7wT1Tte4NH9n8cimvyR"
+		host="0.0.0.0",
+		port=5001
     )
