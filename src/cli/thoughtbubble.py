@@ -263,7 +263,7 @@ def make_word_cloud(songs_df, artist_name, filename, quiet=False):
         height=600,
         min_word_length=4,
         collocations=False,
-        font_path="./Roboto-Regular.ttf",
+        font_path="./fonts/Roboto-Regular.ttf",
     )
 
     if not quiet:
@@ -300,7 +300,7 @@ def cli(artist, filename):
     # Get settings from the user's thoughtbubble.conf file if it exists
     config = configparser.ConfigParser()
     try:
-        config.read(os.path.expanduser("thoughtbubble.conf"))
+        config.read(os.path.expanduser("config/thoughtbubble.conf"))
     except configparser.MissingSectionHeaderError as config_error:
         click.echo(
             f"Invalid thoughtbubble.conf file: Missing [thoughtbubble] header. {config_error}"

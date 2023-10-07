@@ -18,9 +18,6 @@ setup(
         'html5lib',
         'nltk',
         'tqdm',
-        'Flask',
-        'taipy',
-        'pylint'
     ],
     entry_points='''
         [console_scripts]

@@ -10,7 +10,7 @@ Clone the repository somewhere nice and change to the new directory you've just 
 
 ```
 git clone https://github.com/lesservehicle/thoughtbubble.git
-cd thoughtbubble
+cd thoughtbubble/src/cli
 ```
 
 Install [pipenv](https://pipenv.pypa.io/en/latest/installation/) if you don't have it already.
@@ -145,14 +145,16 @@ Repeated words in songs are stripped out, as are song section tags specified in 
 
 For example, here is a the output when you run `thoughtbubble "Frightened Rabbit" frabbit.png`. I'm using a cool utility called `imgcat` to be able to display the word cloud image directly in my terminal window.
 
-![Example](example.png "Example")
+![Example](images/example.png "Example")
 
 ## Taipy App
 
 Thoughtbubble comes bundled with a [Taipy](https://docs.taipy.io/en/release-2.3/) web app now. Install all the prerequisites as above, and run the Taipy app:
 
 ```
-$ python app.py --threading
+$ cd src/web
+$ pip install -r requirements.txt
+$ python main.py
 [2023-09-17 22:43:03][Taipy][INFO]  * Server starting on http://127.0.0.1:5000
 ```
 

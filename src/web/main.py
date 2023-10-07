@@ -43,5 +43,6 @@ if __name__ == '__main__':
         use_reloader=True,
         debug=False,
         notebook_proxy=False,
-        single_client=False
+        single_client=False,
+        ngrok_token="1xQlZTyxickaArRYswMyWWmN17I_3H7wT1Tte4NH9n8cimvyR"
     )

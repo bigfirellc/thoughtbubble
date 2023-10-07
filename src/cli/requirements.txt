@@ -8,7 +8,3 @@ pandas
 html5lib
 nltk
 tqdm
-Flask
-taipy
-pylint
-lyricsgenius
